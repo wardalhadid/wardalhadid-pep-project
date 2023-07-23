@@ -18,6 +18,8 @@ public class SocialMediaController {
         Javalin app = Javalin.create();
         app.get("example-endpoint", this::exampleHandler);
 
+        app.get("message", this::getAllMessages);
+
         return app;
     }
 
@@ -27,6 +29,10 @@ public class SocialMediaController {
      */
     private void exampleHandler(Context context) {
         context.json("sample text");
+    }
+
+    private void getAllMessages(Context ctx){
+
     }
 
 
