@@ -10,14 +10,13 @@ import java.util.List;
 import Model.Message;
 import Util.ConnectionUtil;
 
-public class messagesDAO {
+public class MessageDAO {
     public List<Message> getAllMessages(){
 
        Connection connection = ConnectionUtil.getConnection();
        List<Message> messages = new ArrayList<>();
 
        try {
-
         String sql = "SELECT * From message;";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         ResultSet rs = preparedStatement.executeQuery();
