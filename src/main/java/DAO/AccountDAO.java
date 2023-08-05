@@ -18,7 +18,6 @@ public class AccountDAO {
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getPassword());
             ResultSet rs = preparedStatement.executeQuery();
-            newAccount.setAccount_id(rs.getInt("account_id"));
             newAccount.setPassword(rs.getString("password"));
             newAccount.setUsername(rs.getString("username"));
             

@@ -48,7 +48,16 @@ public class SocialMediaController {
     }
 
     private void register(Context ctx) {
-
+        AccountService accountService = new AccountService();
+        ObjectMapper mapper = new ObjectMapper(); 
+        Account account = mapper.readValue(ctx.body(), Account.class);
+        Account accountToRegister = accountService.register(account);
+        if (accountToRegister == null ) {
+            ctx.status(400);
+        } else {
+            ctx.json(mapper.writeValuesAsString(accountToRegister));
+            ctx.status(200);
+        }
     }
 
     private void login(Context ctx) {
