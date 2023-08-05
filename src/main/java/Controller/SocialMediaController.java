@@ -71,8 +71,16 @@ public class SocialMediaController {
         }
     }
 
-    private void login(Context ctx) {
-
+    private void login(Context ctx) throws JsonMappingException, JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Account inputAccount = mapper.readValue(ctx.body(), Account.class);
+        Account loginAccount = accountService.login(inputAccount);
+        if (loginAccount == null) {
+            ctx.status(401);
+        } else {
+            ctx.status(200);
+            ctx.json(mapper.writeValueAsString(loginAccount));
+        }
     }
 
     private void getAllMessages(Context ctx) {

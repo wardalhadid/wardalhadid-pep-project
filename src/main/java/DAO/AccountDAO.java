@@ -17,7 +17,7 @@ public class AccountDAO {
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getPassword());
             preparedStatement.executeUpdate();
-            return account;
+            return this.login(account);
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -25,22 +25,23 @@ public class AccountDAO {
         return null;
     }
 
-    public Account login(String username, String password) {
+    public Account login(Account account) {
         Connection connection = ConnectionUtil.getConnection();
-        Account account = new Account();
+        Account loginAccount = new Account();
         try{
             String sql = "SELECT * FROM account WHERE username = ? AND password = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(1, account.getUsername());
+            preparedStatement.setString(2, account.getPassword());
             ResultSet rs = preparedStatement.executeQuery();
-            account.setAccount_id(rs.getInt("account_id"));
-            account.setPassword(rs.getString("password"));
-            account.setUsername(rs.getString("username"));
+            if (!rs.next()) return null;
+            loginAccount.setPassword(rs.getString("password"));
+            loginAccount.setUsername(rs.getString("username"));
+            loginAccount.setAccount_id(rs.getInt("account_id"));
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return account;
+        return loginAccount;
     }
 }

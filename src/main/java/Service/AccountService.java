@@ -12,9 +12,11 @@ public class AccountService {
     public AccountService(){
         accountDAO = new AccountDAO();
     }
+
     public AccountService(AccountDAO accountDAO) {
         this.accountDAO = accountDAO;
     }
+
     List<Account> accountList = new ArrayList<>();
     
     public Account register(Account account) {
@@ -33,6 +35,10 @@ public class AccountService {
         } else {
             return null;
         }
-        
+    }
+
+    public Account login(Account account) {
+        if (account == null) return null;
+        return accountDAO.login(account);
     }
 }
