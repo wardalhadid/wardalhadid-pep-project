@@ -23,6 +23,12 @@ public class SocialMediaController {
      */
 
      MessageService messageService;
+     AccountService accountService;
+
+     public SocialMediaController() {
+        messageService = new MessageService();
+        accountService = new AccountService();
+     }
 
     public Javalin startAPI() {
         Javalin app = Javalin.create();
@@ -53,24 +59,16 @@ public class SocialMediaController {
         context.json("sample text");
     }
 
-    private void register(Context ctx) {
-        AccountService accountService = new AccountService();
+    private void register(Context ctx) throws JsonMappingException, JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper(); 
-        Account account;
-        try {
-            account = mapper.readValue(ctx.body(), Account.class);
+        Account account = mapper.readValue(ctx.body(), Account.class);
         Account accountToRegister = accountService.register(account);
         if (accountToRegister == null ) {
             ctx.status(400);
         } else {
-            ctx.json(mapper.writeValueAsString(accountToRegister));
             ctx.status(200);
+            ctx.json(mapper.writeValueAsString(accountToRegister));
         }
-    } catch (JsonMappingException e) {
-        e.printStackTrace();
-    } catch (JsonProcessingException e) {
-        e.printStackTrace();
-    }
     }
 
     private void login(Context ctx) {
@@ -82,22 +80,22 @@ public class SocialMediaController {
     }
 
     private void createNewMessage(Context ctx) {
-
+        ctx.status(200);
     }
 
     private void getMessageById(Context ctx) {
-
+        ctx.status(200);
     }
 
     private void deleteMesssage(Context ctx) {
-
+        ctx.status(200);
     }
 
     private void updateMessage(Context ctx) {
-
+        ctx.status(200);
     }
 
     private void getAllMessagesFromUser(Context ctx) {
-
+        ctx.status(200);
     }
 }

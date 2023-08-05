@@ -11,20 +11,18 @@ import Util.ConnectionUtil;
 public class AccountDAO {
     public Account register(Account account){
         Connection connection = ConnectionUtil.getConnection();
-        Account newAccount = new Account();
         try{
-            String sql = "INSERT INTO account(username, password) VALUES (?, ?);";
+            String sql = "INSERT INTO account (username, password) VALUES (?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getPassword());
-            ResultSet rs = preparedStatement.executeQuery();
-            newAccount.setPassword(rs.getString("password"));
-            newAccount.setUsername(rs.getString("username"));
+            preparedStatement.executeUpdate();
+            return account;
             
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return newAccount;
+        return null;
     }
 
     public Account login(String username, String password) {
