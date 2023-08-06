@@ -20,10 +20,7 @@ public class AccountService {
     List<Account> accountList = new ArrayList<>();
     
     public Account register(Account account) {
-        if ( accountList.stream()
-        .filter(acc -> acc.getUsername().equals(account.getUsername()))
-        .findAny()
-        .orElse(null) == null ) {
+        if (!accountDAO.confirmAccountIdExists(account.getAccount_id())) {
             Account accountToBeRegistered = accountDAO.register(account);
         if(!account.getUsername().equals("") &&
             account.getPassword().length() >= 4) {
